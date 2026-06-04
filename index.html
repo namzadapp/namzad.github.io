@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namzad — for Afghans ready for marriage</title>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1579989125513028');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f3;
+    --ink: #1c1c1c;
+    --muted: #6f6f6f;
+    --line: #e6e6e4;
+    --dark: #1c1c1c;
+    --accent: #d34a3e;
+    --card: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100svh;
+  }
+
+  /* framed canvas with faint guide lines */
+  .frame {
+    position: relative;
+    min-height: 100svh;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  /* inner vertical guides */
+  .frame::before, .frame::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0;
+    width: 1px; background: var(--line);
+  }
+  .frame::before { left: 13%; }
+  .frame::after  { right: 13%; }
+
+  /* logo */
+  .logo {
+    text-align: center;
+    padding: 30px 0 28px;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800; font-size: 23px; letter-spacing: -0.03em;
+    position: relative; z-index: 1;
+  }
+  .logo .dot { color: var(--accent); }
+
+  /* center hero */
+  .hero {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative; z-index: 1;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fbeceb;
+    border: 1px solid #f3d2cf;
+    color: var(--accent);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 10px -4px rgba(211,74,62,0.18);
+    margin-bottom: 30px;
+    animation: rise .7s ease both;
+  }
+  .badge .live {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 7vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    max-width: 14ch;
+    animation: rise .7s ease .05s both;
+  }
+  .hero p {
+    margin-top: 20px;
+    font-size: clamp(16px, 2.2vw, 19px);
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 32ch;
+    animation: rise .7s ease .12s both;
+  }
+
+  /* inline form */
+  .form {
+    margin-top: 34px;
+    display: flex; gap: 10px;
+    width: 100%; max-width: 440px;
+    animation: rise .7s ease .18s both;
+  }
+  .form input {
+    flex: 1;
+    padding: 16px 22px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--card);
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 15px; color: var(--ink);
+    box-shadow: 0 2px 12px -6px rgba(0,0,0,0.1);
+    transition: border-color .2s;
+  }
+  .form input::placeholder { color: #aeaeae; }
+  .form input:focus { outline: none; border-color: var(--ink); }
+  .form button {
+    padding: 16px 28px;
+    border: none; border-radius: 100px;
+    background: var(--accent); color: #fff;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px;
+    cursor: pointer; white-space: nowrap;
+    box-shadow: 0 8px 22px -10px rgba(211,74,62,0.55);
+    transition: background .2s, transform .1s;
+  }
+  .form button:hover { background: #bf3e33; }
+  .form button:active { transform: scale(.98); }
+  .formnote {
+    margin-top: 14px;
+    font-size: 13px; color: var(--muted);
+    max-width: 380px; line-height: 1.5;
+    animation: rise .7s ease .3s both;
+  }
+
+  /* secondary inputs (gender + country) */
+  .extras {
+    margin-top: 22px;
+    display: flex; flex-direction: column; gap: 10px; align-items: stretch;
+    width: 100%; max-width: 440px;
+    animation: rise .7s ease .24s both;
+  }
+  .extras .grp { display: flex; gap: 8px; }
+  /* gender: two equal side-by-side */
+  #gender .chip { flex: 1; text-align: center; }
+  /* country: stacked full-width rows */
+  #country { flex-direction: column; gap: 8px; }
+  #country .chip {
+    width: 100%; text-align: left;
+    border-radius: 14px;
+    padding: 13px 18px;
+  }
+  .chip {
+    padding: 11px 18px;
+    border: 1px solid var(--line); border-radius: 100px;
+    background: var(--card);
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    cursor: pointer; transition: all .18s;
+  }
+  .chip:hover { border-color: var(--ink); color: var(--ink); }
+  .chip.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+
+  /* social proof footer band */
+  .proof {
+    border-top: 1px solid var(--line);
+    padding: 26px 24px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    position: relative; z-index: 1;
+  }
+  .avatars { display: flex; }
+  .avatars span {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--bg); margin-left: -10px;
+    background-size: cover; background-position: center;
+  }
+  .avatars span:first-child { margin-left: 0; }
+  .proof .count { font-size: 14px; color: var(--muted); }
+
+  .legal {
+    border-top: 1px solid var(--line);
+    text-align: center; padding: 20px;
+    font-size: 12px; color: #9a9a9a;
+    position: relative; z-index: 1;
+  }
+  .legal .dot { color: var(--accent); }
+
+  /* confirmation swap */
+  .confirm { display: none; }
+  .confirm.show { display: flex; flex-direction: column; align-items: center; animation: rise .5s ease both; }
+  .confirm .ring {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--dark); color: #fff; font-size: 28px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  }
+  .confirm h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px,5vw,40px); letter-spacing: -0.02em; }
+  .confirm p { margin-top: 12px; color: var(--muted); font-size: 17px; }
+  .hero.hide { display: none; }
+
+  /* centered line art motif */
+  .motif {
+    margin-top: 26px;
+    width: 230px; max-width: 70%;
+    color: var(--accent);
+    opacity: 0.75;
+    animation: rise .7s ease .16s both;
+  }
+  .motif svg { display: block; width: 100%; height: auto; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 640px) {
+    .frame::before { left: 0; } .frame::after { right: 0; }
+    .form { flex-direction: column; max-width: 340px; }
+    .form button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+
+    <div class="logo">Namzad<span class="dot">.</span></div>
+
+    <div class="hero" id="hero">
+      <div class="badge"><span class="live"></span>Waitlist open · Launching 2026</div>
+      <h1>For Afghans seeking marriage</h1>
+      <p>A private, respectful way to meet Afghan singles ready for marriage.</p>
+
+      <div class="motif">
+        <svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <!-- left line + leaf -->
+          <path d="M2 48 H84" opacity="0.4"/>
+          <path d="M60 48 C50 42 40 46 40 54 C52 57 60 53 60 48 Z" opacity="0.7"/>
+          <path d="M50 50 L40 54" opacity="0.5"/>
+
+          <!-- center pomegranate -->
+          <!-- crown -->
+          <path d="M120 30 C120 20 114 16 110 12 M120 30 C120 20 126 16 130 12 M120 30 V14"/>
+          <!-- fruit body -->
+          <path d="M120 32 C103 32 97 47 97 60 C97 76 108 86 120 86 C132 86 143 76 143 60 C143 47 137 32 120 32 Z"/>
+          <!-- seeds -->
+          <circle cx="120" cy="54" r="2"/>
+          <circle cx="112" cy="62" r="2"/>
+          <circle cx="128" cy="62" r="2"/>
+          <circle cx="116" cy="72" r="2"/>
+          <circle cx="124" cy="72" r="2"/>
+
+          <!-- right line + leaf -->
+          <path d="M156 48 H238" opacity="0.4"/>
+          <path d="M180 48 C190 42 200 46 200 54 C188 57 180 53 180 48 Z" opacity="0.7"/>
+          <path d="M190 50 L200 54" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <div class="extras" id="extras">
+        <div class="grp" id="gender">
+          <span class="chip" data-val="woman">I'm a woman</span>
+          <span class="chip" data-val="man">I'm a man</span>
+        </div>
+        <div class="grp" id="country">
+          <span class="chip" data-val="United States">🇺🇸 United States</span>
+          <span class="chip" data-val="Canada">🇨🇦 Canada</span>
+          <span class="chip" data-val="United Kingdom">🇬🇧 United Kingdom</span>
+          <span class="chip" data-val="Germany">🇩🇪 Germany</span>
+          <span class="chip" data-val="Australia">🇦🇺 Australia</span>
+          <span class="chip" data-val="Other">🌍 Elsewhere</span>
+        </div>
+      </div>
+
+      <div class="form">
+        <input type="email" id="email" placeholder="name@email.com">
+        <button id="join">Join the waitlist</button>
+      </div>
+      <div class="formnote">The app isn't live yet — join the waitlist and we'll email you the moment it opens.</div>
+    </div>
+
+    <div class="hero confirm" id="confirm">
+      <div class="ring">✓</div>
+      <h2>You're on the list</h2>
+      <p>Thank you. We'll reach out the moment Namzad opens.</p>
+    </div>
+
+    <div class="proof">
+      <div class="avatars">
+        <span style="background-image:url('https://i.pravatar.cc/64?img=12')"></span>
+        <span style="background-image:url('https://i.pravatar.cc/64?img=32')"></span>
+        <span style="background-image:url('https://i.pravatar.cc/64?img=45')"></span>
+      </div>
+      <div class="count"><strong id="num">312</strong> already on the waitlist</div>
+    </div>
+
+    <div class="legal">© 2026 Namzad<span class="dot">.</span> &nbsp;·&nbsp; Built for the Afghan diaspora</div>
+  </div>
+
+<script>
+  function wireChips(id) {
+    document.querySelectorAll('#' + id + ' .chip').forEach(c => {
+      c.addEventListener('click', () => {
+        document.querySelectorAll('#' + id + ' .chip').forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+      });
+    });
+  }
+  wireChips('gender');
+  wireChips('country');
+
+  // ⬇️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6b6DdN0v082H0Hh_90vB-AvfZ5_0JFxJFODMIMGi7ZfZ8bIGjfKYBMI5z09qPDjI/exec';
+
+  document.getElementById('join').addEventListener('click', () => {
+    const btn = document.getElementById('join');
+    const email = document.getElementById('email').value.trim();
+    const gender = document.querySelector('#gender .chip.active');
+    const country = document.querySelector('#country .chip.active');
+    if (!gender) { alert('Quick — let us know if you\'re a woman or a man.'); return; }
+    if (!country) { alert('Tap where you are based.'); return; }
+    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+
+    const payload = {
+      email: email,
+      gender: gender.dataset.val,
+      country: country.dataset.val
+    };
+
+    // optimistic UI: show loading, then confirm
+    btn.disabled = true;
+    btn.textContent = 'Joining…';
+
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors', // Apps Script needs this; response is opaque but the row still saves
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      if (window.fbq) { fbq('track', 'Lead'); }
+      document.getElementById('hero').classList.add('hide');
+      document.getElementById('confirm').classList.add('show');
+    })
+    .catch(() => {
+      // even on a network hiccup, show confirm so the user isn't blocked;
+      // check your sheet to confirm the row landed
+      if (window.fbq) { fbq('track', 'Lead'); }
+      document.getElementById('hero').classList.add('hide');
+      document.getElementById('confirm').classList.add('show');
+    });
+  });
+</script>
+</body>
+</html>
