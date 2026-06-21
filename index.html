@@ -287,6 +287,48 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
   }
   .confirm h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px,5vw,40px); letter-spacing: -0.02em; }
   .confirm p { margin-top: 12px; color: var(--muted); font-size: 17px; }
+
+  /* optional profile step */
+  .profilestep {
+    margin-top: 34px; width: 100%; max-width: 460px;
+    border-top: 1px solid var(--line); padding-top: 30px;
+  }
+  .profilestep .ptitle {
+    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+    font-size: 22px; letter-spacing: -0.01em; color: var(--ink);
+    text-align: center;
+  }
+  .profilestep .psub {
+    margin-top: 8px; font-size: 14px; color: var(--muted);
+    text-align: center; line-height: 1.5; max-width: 380px; margin-left: auto; margin-right: auto;
+  }
+  .pfield { margin-top: 22px; }
+  .pfield .plabel {
+    font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px;
+    display: block;
+  }
+  .pfield .plabel .opt { color: var(--muted); font-weight: 400; }
+  .pchips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pchips .chip { padding: 9px 15px; font-size: 13px; }
+  .pcity {
+    width: 100%; padding: 13px 16px; border: 1px solid var(--line);
+    border-radius: 14px; background: var(--card); font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 15px; color: var(--ink); outline: none;
+  }
+  .pcity:focus { border-color: var(--ink); }
+  .pcity::placeholder { color: var(--muted); }
+  .profileactions { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .profileactions button {
+    width: 100%; max-width: 320px; padding: 15px; border-radius: 14px;
+    font-family: 'Hanken Grotesk', sans-serif; font-size: 16px; font-weight: 600;
+    cursor: pointer; border: none; transition: all .18s;
+  }
+  .profileactions .save { background: var(--accent); color: #fff; }
+  .profileactions .save:hover { filter: brightness(1.05); }
+  .profileactions .skip { background: none; color: var(--muted); font-size: 14px; padding: 4px; }
+  .profileactions .skip:hover { color: var(--ink); }
+  .profiledone { margin-top: 20px; font-size: 16px; color: var(--ink); font-weight: 600; text-align: center; display: none; }
+  .profiledone.show { display: block; animation: rise .4s ease both; }
   .hero.hide { display: none; }
 
   /* centered line art motif */
@@ -355,7 +397,9 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
           <span class="chip" data-val="Canada">🇨🇦 Canada</span>
           <span class="chip" data-val="United Kingdom">🇬🇧 United Kingdom</span>
           <span class="chip" data-val="Germany">🇩🇪 Germany</span>
+          <span class="chip" data-val="France">🇫🇷 France</span>
           <span class="chip" data-val="Australia">🇦🇺 Australia</span>
+          <span class="chip" data-val="Afghanistan">🇦🇫 Afghanistan</span>
           <span class="chip" data-val="Other">🌍 Elsewhere</span>
         </div>
       </div>
@@ -375,6 +419,53 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
       <div class="ring">✓</div>
       <h2>You're a founding member</h2>
       <p>Thank you. You'll be among the first on Namzad when we launch.</p>
+
+      <div class="profilestep" id="profilestep">
+        <div class="ptitle">Help us build for you</div>
+        <div class="psub">A few optional details — it helps us decide where to bring Namzad first, and make sure we reach you. Share only what you're comfortable with.</div>
+
+        <div class="pfield">
+          <label class="plabel">Which city are you in? <span class="opt">(optional)</span></label>
+          <input class="pcity" id="p_city" type="text" placeholder="e.g. Fremont, Hamburg, Toronto…">
+        </div>
+
+        <div class="pfield">
+          <label class="plabel">Age range <span class="opt">(optional)</span></label>
+          <div class="pchips grp" id="p_age">
+            <span class="chip" data-val="18-24">18–24</span>
+            <span class="chip" data-val="25-29">25–29</span>
+            <span class="chip" data-val="30-34">30–34</span>
+            <span class="chip" data-val="35-39">35–39</span>
+            <span class="chip" data-val="40+">40+</span>
+          </div>
+        </div>
+
+        <div class="pfield">
+          <label class="plabel">Languages you speak <span class="opt">(optional)</span></label>
+          <div class="pchips grp" id="p_lang" data-multi="1">
+            <span class="chip" data-val="Dari">Dari</span>
+            <span class="chip" data-val="Pashto">Pashto</span>
+            <span class="chip" data-val="English">English</span>
+            <span class="chip" data-val="German">German</span>
+            <span class="chip" data-val="Other">Other</span>
+          </div>
+        </div>
+
+        <div class="pfield">
+          <label class="plabel">When are you hoping to marry? <span class="opt">(optional)</span></label>
+          <div class="pchips grp" id="p_timeline">
+            <span class="chip" data-val="Within a year">Within a year</span>
+            <span class="chip" data-val="1-2 years">1–2 years</span>
+            <span class="chip" data-val="When I meet the right person">When I meet the right person</span>
+          </div>
+        </div>
+
+        <div class="profileactions">
+          <button class="save" id="p_save">Save my details</button>
+          <button class="skip" id="p_skip">Skip for now</button>
+        </div>
+        <div class="profiledone" id="p_done">Thank you — we've noted it. 🍎</div>
+      </div>
     </div>
 
     <div class="about">
@@ -404,16 +495,27 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
   function wireChips(id) {
     document.querySelectorAll('#' + id + ' .chip').forEach(c => {
       c.addEventListener('click', () => {
-        document.querySelectorAll('#' + id + ' .chip').forEach(x => x.classList.remove('active'));
-        c.classList.add('active');
+        const container = document.getElementById(id);
+        const multi = container && container.dataset.multi === '1';
+        if (multi) {
+          c.classList.toggle('active');
+        } else {
+          document.querySelectorAll('#' + id + ' .chip').forEach(x => x.classList.remove('active'));
+          c.classList.add('active');
+        }
       });
     });
   }
   wireChips('gender');
   wireChips('country');
+  wireChips('p_age');
+  wireChips('p_lang');
+  wireChips('p_timeline');
 
   // ⬇️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6b6DdN0v082H0Hh_90vB-AvfZ5_0JFxJFODMIMGi7ZfZ8bIGjfKYBMI5z09qPDjI/exec';
+
+  let joinedEmail = '';
 
   document.getElementById('join').addEventListener('click', () => {
     const btn = document.getElementById('join');
@@ -423,6 +525,8 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
     if (!gender) { alert('Quick — let us know if you\'re a woman or a man.'); return; }
     if (!country) { alert('Tap where you are based.'); return; }
     if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+
+    joinedEmail = email;
 
     const payload = {
       email: email,
@@ -444,6 +548,7 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
       if (window.fbq) { fbq('track', 'Lead'); }
       document.getElementById('hero').classList.add('hide');
       document.getElementById('confirm').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'auto' });
     })
     .catch(() => {
       // even on a network hiccup, show confirm so the user isn't blocked;
@@ -451,8 +556,47 @@ src="https://www.facebook.com/tr?id=1579989125513028&ev=PageView&noscript=1"/></
       if (window.fbq) { fbq('track', 'Lead'); }
       document.getElementById('hero').classList.add('hide');
       document.getElementById('confirm').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'auto' });
     });
   });
+
+  // ---- optional profile step ----
+  function multiVals(id) {
+    return Array.from(document.querySelectorAll('#' + id + ' .chip.active'))
+      .map(c => c.dataset.val).join(', ');
+  }
+  function singleVal(id) {
+    const c = document.querySelector('#' + id + ' .chip.active');
+    return c ? c.dataset.val : '';
+  }
+
+  document.getElementById('p_save').addEventListener('click', () => {
+    const saveBtn = document.getElementById('p_save');
+    const profile = {
+      type: 'profile',
+      email: joinedEmail,
+      city: document.getElementById('p_city').value.trim(),
+      age: singleVal('p_age'),
+      languages: multiVals('p_lang'),
+      timeline: singleVal('p_timeline')
+    };
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving…';
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(profile)
+    }).finally(() => {
+      document.getElementById('profilestep').querySelector('.profileactions').style.display = 'none';
+      document.getElementById('p_done').classList.add('show');
+    });
+  });
+
+  document.getElementById('p_skip').addEventListener('click', () => {
+    document.getElementById('profilestep').style.display = 'none';
+  });
+
 </script>
 </body>
 </html>
