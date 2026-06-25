@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namzad — A first look</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f4f4f3;--ink:#1c1c1c;--muted:#6f6f6f;--line:#e6e6e4;--dark:#1c1c1c;--accent:#d34a3e;--card:#ffffff;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Hanken Grotesk',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .frame{position:relative;max-width:1100px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100svh;display:flex;flex-direction:column;}
+  .logo{text-align:center;padding:30px 0 28px;border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:23px;letter-spacing:-0.03em;}
+  .logo .dot{color:var(--accent);}
+  .logo a{color:inherit;text-decoration:none;}
+
+  .intro{text-align:center;padding:54px 24px 10px;animation:rise .6s ease both;}
+  .intro .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px;}
+  .intro h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,5.5vw,46px);letter-spacing:-0.03em;line-height:1.04;max-width:16ch;margin:0 auto;}
+  .intro p{margin-top:18px;font-size:17px;color:var(--muted);line-height:1.55;max-width:46ch;margin-left:auto;margin-right:auto;}
+
+  .preview-band{padding:40px 24px 50px;}
+  .frow{display:flex;align-items:center;gap:48px;max-width:760px;margin:0 auto;padding:34px 0;}
+  .frow+.frow{border-top:1px solid var(--line);}
+  .frow.flip{flex-direction:row-reverse;}
+  .frow .ftext{flex:1;max-width:360px;}
+  .frow .fstep{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.04em;}
+  .frow .ftext h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(21px,3vw,26px);letter-spacing:-0.02em;margin-top:10px;line-height:1.12;}
+  .frow .ftext p{margin-top:12px;font-size:15px;color:var(--muted);line-height:1.6;max-width:34ch;}
+  .frow .fphone{flex-shrink:0;}
+
+  .mini{width:230px;height:478px;background:#fff;border-radius:32px;box-shadow:0 26px 60px -24px rgba(0,0,0,.3),0 0 0 6px #111,0 0 0 7px #2a2a2c;overflow:hidden;font-family:'Geist',sans-serif;text-align:left;position:relative;}
+  .mini .mnotch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:86px;height:18px;background:#000;border-radius:0 0 11px 11px;z-index:5;}
+  .m-top{display:flex;align-items:center;justify-content:space-between;padding:24px 15px 9px;}
+  .m-brand{font-weight:700;font-size:14px;letter-spacing:-.03em;color:#15171c;}
+  .m-photo{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,#3a2b3f,#7a3a44);position:relative;}
+  .m-photo .m-like{position:absolute;bottom:11px;right:11px;width:34px;height:34px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px -4px rgba(0,0,0,.3);border:none;}
+  .m-like svg{width:17px;height:17px;color:#15171c;}
+  .m-name{padding:13px 15px 4px;}
+  .m-name h3{font-size:20px;font-weight:600;letter-spacing:-.02em;color:#15171c;display:flex;align-items:center;gap:6px;font-family:'Geist',sans-serif;margin:0;}
+  .m-vf{width:14px;height:14px;background:#15171c;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+  .m-vf svg{width:8px;height:8px;color:#fff;}
+  .m-name .m-sub{font-size:11px;color:#d34a3e;font-weight:600;margin-top:5px;display:flex;align-items:center;gap:4px;}
+  .m-name .m-sub svg{width:11px;height:11px;}
+  .m-prompt{margin:13px 15px;}
+  .m-prompt .mq{font-size:10px;color:#8b9099;font-weight:500;margin-bottom:6px;}
+  .m-prompt .ma{font-size:15px;font-weight:500;color:#15171c;line-height:1.35;letter-spacing:-.01em;}
+  .m-divide{height:1px;background:#eef0f3;margin:13px 15px;}
+  .m-rows{padding:0 15px;}
+  .m-row{display:flex;align-items:center;gap:9px;font-size:11.5px;color:#15171c;font-weight:500;padding:6px 0;}
+  .m-row svg{width:13px;height:13px;color:#8b9099;flex-shrink:0;}
+  .m-turn-label{padding:10px 15px 6px;font-size:9.5px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;}
+  .m-chat{display:flex;align-items:center;gap:9px;padding:8px 15px;}
+  .m-chat .ca{width:38px;height:38px;border-radius:50%;flex-shrink:0;}
+  .m-chat .cmid{flex:1;min-width:0;}
+  .m-chat .cn2{font-size:12.5px;font-weight:600;color:#15171c;}
+  .m-chat .cm{font-size:11px;color:#15171c;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .m-chat .cd{width:8px;height:8px;border-radius:50%;background:#d34a3e;flex-shrink:0;}
+  .m-nav{position:absolute;bottom:0;left:0;right:0;height:44px;background:#fff;border-top:1px solid #eef0f3;display:flex;align-items:center;justify-content:space-around;}
+  .m-nav svg{width:17px;height:17px;color:#c2c4c8;}
+  .m-nav svg.on{color:#d34a3e;}
+
+  .cta{border-top:1px solid var(--line);text-align:center;padding:50px 24px 56px;}
+  .cta h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(24px,4vw,34px);letter-spacing:-0.02em;max-width:18ch;margin:0 auto;}
+  .cta p{margin-top:14px;font-size:16px;color:var(--muted);max-width:40ch;margin-left:auto;margin-right:auto;line-height:1.55;}
+  .cta .btn{display:inline-block;margin-top:26px;background:var(--accent);color:#fff;font-weight:600;font-size:16px;text-decoration:none;padding:16px 34px;border-radius:100px;box-shadow:0 8px 22px -10px rgba(211,74,62,.55);transition:background .2s;}
+  .cta .btn:hover{background:#bf3e33;}
+
+  .legal{border-top:1px solid var(--line);text-align:center;padding:20px;font-size:12px;color:#9a9a9a;}
+  .legal .dot{color:var(--accent);}
+
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @media (max-width:640px){
+    .frow{flex-direction:column !important;text-align:center;gap:28px;}
+    .frow .ftext p{max-width:none;margin-left:auto;margin-right:auto;}
+    .mini{width:220px;height:458px;}
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="logo"><a href="/">Namzad<span class="dot">.</span></a></div>
+
+    <div class="intro">
+      <div class="label">A first look</div>
+      <h1>The marriage app we wish existed</h1>
+      <p>Clean, private, and made for us. Here's an early look at how Namzad will feel — designed for intention, not endless swiping.</p>
+    </div>
+
+    <div class="preview-band">
+      <!-- ROW 1 — Discover -->
+      <div class="frow">
+        <div class="ftext">
+          <div class="fstep">01 · Discover</div>
+          <h3>Five thoughtful likes a day</h3>
+          <p>No endless swiping. You get a handful of likes each day, so you slow down and choose with intention — the way looking for marriage should feel.</p>
+        </div>
+        <div class="fphone">
+          <div class="mini">
+            <div class="mnotch"></div>
+            <div class="m-top"><span style="display:flex;align-items:center;color:#15171c;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:17px;height:17px;"><path d="M3 6h12M19 6h2M3 12h2M9 12h12M3 18h8M15 18h6" stroke-linecap="round"/><circle cx="17" cy="6" r="2.2"/><circle cx="7" cy="12" r="2.2"/><circle cx="13" cy="18" r="2.2"/></svg></span></div>
+            <div class="m-name" style="display:flex;align-items:flex-start;justify-content:space-between;padding-top:4px;">
+              <div><h3>Maryam</h3><div class="m-sub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6-6.3 4.6L8 13.9 2 9.4h7.6z"/></svg> Verified profile</div></div>
+            </div>
+            <div class="m-photo" style="margin-top:8px;aspect-ratio:3/2.4;"><button class="m-like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg></button></div>
+            <div style="font-size:9.5px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;padding:11px 15px 3px;">Basics</div>
+            <div class="m-rows" style="padding-bottom:4px;">
+              <div class="m-row" style="padding:5px 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7zM4 16h16M12 8V5M9 8V6M15 8V6" stroke-linecap="round" stroke-linejoin="round"/></svg> 27 years old</div>
+              <div class="m-row" style="padding:5px 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v18M6 4h11l-2 3 2 3H6" stroke-linecap="round" stroke-linejoin="round"/></svg> 165cm · 5'5"</div>
+              <div class="m-row" style="padding:5px 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg> Speaks Dari &amp; English</div>
+            </div>
+            <div class="m-divide" style="margin:8px 15px;"></div>
+            <div class="m-prompt" style="margin:0 15px 12px;"><div class="mq">The way to my heart is</div><div class="ma" style="font-size:14px;">A home-cooked qabuli palaw and conversation till midnight.</div></div>
+            <div class="m-nav">
+              <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 19V5l12 14V5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v12H7l-3 3z" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2 — Verification -->
+      <div class="frow flip">
+        <div class="ftext">
+          <div class="fstep">02 · Trust &amp; safety</div>
+          <h3>Every member is verified</h3>
+          <p>A quick verification selfie confirms each person is real before they can be seen — so you know you're talking to a genuine person who's serious about marriage.</p>
+        </div>
+        <div class="fphone">
+          <div class="mini">
+            <div class="mnotch"></div>
+            <div style="display:flex;align-items:center;gap:11px;padding:24px 15px 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#15171c" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div style="flex:1;height:4px;background:#eef0f3;border-radius:4px;overflow:hidden;"><div style="height:100%;width:100%;background:#d34a3e;border-radius:4px;"></div></div>
+              <span style="font-size:10px;font-weight:600;color:#8b9099;flex-shrink:0;">22 / 22</span>
+            </div>
+            <div style="padding:18px 15px 0;"><div style="font-size:18px;font-weight:600;letter-spacing:-.02em;color:#15171c;line-height:1.2;">Verify it's really you</div><div style="font-size:11.5px;color:#8b9099;font-weight:500;margin-top:6px;line-height:1.4;">One quick selfie so we know everyone here is real.</div></div>
+            <div style="padding:16px 15px 0;">
+              <div style="aspect-ratio:1.3/1;border-radius:16px;border:1.5px dashed #d8dce2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:#fff;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#d34a3e" stroke-width="1.6" style="width:30px;height:30px;"><circle cx="12" cy="9" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke-linecap="round"/></svg>
+                <span style="font-size:12px;font-weight:600;color:#15171c;">Take verification selfie</span>
+                <span style="font-size:10px;color:#8b9099;font-weight:500;">Hold up two fingers, face visible</span>
+              </div>
+              <div style="margin-top:12px;background:#faf6f2;border:1px solid #f1e4dc;border-radius:12px;padding:11px 12px;display:flex;gap:9px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#d34a3e" stroke-width="1.8" style="width:15px;height:15px;flex-shrink:0;margin-top:1px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linejoin="round"/></svg>
+                <p style="font-size:10.5px;color:#15171c;font-weight:500;line-height:1.4;">Only used to confirm you're real. Never shown on your profile.</p>
+              </div>
+            </div>
+            <div style="margin:18px 15px 0;background:#d34a3e;color:#fff;border-radius:13px;padding:14px;text-align:center;font-size:13px;font-weight:600;">Take selfie</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 3 — Your likes -->
+      <div class="frow">
+        <div class="ftext">
+          <div class="fstep">03 · Your likes</div>
+          <h3>See who likes you</h3>
+          <p>Browse the people who've liked you one at a time, and like them back to match. Calm and focused — never an overwhelming wall of faces.</p>
+        </div>
+        <div class="fphone">
+          <div class="mini">
+            <div class="mnotch"></div>
+            <div class="m-top"><span class="m-brand">People who like you</span><span style="font-size:11px;font-weight:600;color:#d34a3e;background:#fdecec;padding:3px 8px;border-radius:12px;">1 of 8</span></div>
+            <div class="m-photo" style="aspect-ratio:3/3.4;"><button class="m-like" style="background:#d34a3e;"><svg viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg></button></div>
+            <div class="m-name"><h3>Ahmad, 29 <span class="m-vf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h3><div class="m-sub" style="color:#8b9099;font-weight:500;">Toronto, Canada</div></div>
+            <div style="margin:8px 14px 0;background:#faf6f2;border:1px solid #f1e4dc;border-radius:11px;padding:9px 11px;font-size:10.5px;color:#15171c;font-weight:500;">7 more people like you</div>
+            <div class="m-nav">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 19V5l12 14V5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v12H7l-3 3z" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 4 — Conversations -->
+      <div class="frow flip">
+        <div class="ftext">
+          <div class="fstep">04 · Conversations</div>
+          <h3>Five conversations at a time</h3>
+          <p>Focus on up to five active chats at once. Reply to the people waiting on you before you like more — real attention, not a hundred half-finished threads.</p>
+        </div>
+        <div class="fphone">
+          <div class="mini">
+            <div class="mnotch"></div>
+            <div class="m-top"><span class="m-brand">Chats</span></div>
+            <div style="margin:2px 13px 6px;background:#fdecec;border:1px solid #f6d8d8;border-radius:11px;padding:9px 11px;display:flex;gap:8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#d34a3e" stroke-width="1.8" style="width:14px;height:14px;flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg>
+              <p style="font-size:9.5px;color:#15171c;font-weight:500;line-height:1.35;">You've reached 5 chats — reply to free up space before liking more.</p>
+            </div>
+            <div class="m-turn-label" style="padding:2px 15px 4px;">Your turn <span style="background:#d34a3e;color:#fff;padding:1px 6px;border-radius:9px;font-size:8.5px;">5</span></div>
+            <div class="m-chat" style="padding:4.5px 15px;"><div class="ca" style="width:32px;height:32px;background:linear-gradient(160deg,#3a2b3f,#7a3a44)"></div><div class="cmid"><div class="cn2" style="font-size:11.5px;">Ahmad</div><div class="cm" style="font-size:10px;">Start the chat with Ahmad</div></div><div class="cd"></div></div>
+            <div class="m-chat" style="padding:4.5px 15px;"><div class="ca" style="width:32px;height:32px;background:linear-gradient(150deg,#2f3340,#5a3a48)"></div><div class="cmid"><div class="cn2" style="font-size:11.5px;">Bilal</div><div class="cm" style="font-size:10px;">That's so true. Family is everything 🌙</div></div><div class="cd"></div></div>
+            <div class="m-chat" style="padding:4.5px 15px;"><div class="ca" style="width:32px;height:32px;background:linear-gradient(150deg,#403040,#7a3a44)"></div><div class="cmid"><div class="cn2" style="font-size:11.5px;">Omar</div><div class="cm" style="font-size:10px;">Where is your family from?</div></div><div class="cd"></div></div>
+            <div class="m-chat" style="padding:4.5px 15px;"><div class="ca" style="width:32px;height:32px;background:linear-gradient(150deg,#34303f,#5a3a48)"></div><div class="cmid"><div class="cn2" style="font-size:11.5px;">Wahid</div><div class="cm" style="font-size:10px;">Salaam! How has your week been?</div></div><div class="cd"></div></div>
+            <div class="m-chat" style="padding:4.5px 15px;"><div class="ca" style="width:32px;height:32px;background:linear-gradient(160deg,#2f2535,#5a3340)"></div><div class="cmid"><div class="cn2" style="font-size:11.5px;">Tamim</div><div class="cm" style="font-size:10px;">Haha I love that. Do you cook often?</div></div><div class="cd"></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 15px;border-top:1px solid #eef0f3;margin-top:2px;"><span style="font-size:9px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;">Their turn <span style="background:#f4f5f7;color:#8b9099;padding:1px 6px;border-radius:9px;">2</span></span><svg viewBox="0 0 24 24" fill="none" stroke="#8b9099" stroke-width="2" style="width:14px;height:14px;"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 15px;border-top:1px solid #eef0f3;"><span style="font-size:9px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;">Archive <span style="background:#f4f5f7;color:#8b9099;padding:1px 6px;border-radius:9px;">3</span></span><svg viewBox="0 0 24 24" fill="none" stroke="#8b9099" stroke-width="2" style="width:14px;height:14px;"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div>
+            <div class="m-nav">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 19V5l12 14V5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg>
+              <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v12H7l-3 3z" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 5 — Profile -->
+      <div class="frow">
+        <div class="ftext">
+          <div class="fstep">05 · Your profile</div>
+          <h3>A profile that's really you</h3>
+          <p>Six photos, prompts in your own words, and the details that matter for marriage — faith, family, languages and intentions. Easy to build, easy to update.</p>
+        </div>
+        <div class="fphone">
+          <div class="mini">
+            <div class="mnotch"></div>
+            <div style="display:flex;justify-content:center;gap:24px;padding:24px 0 0;border-bottom:1px solid #eef0f3;">
+              <span style="font-size:13px;font-weight:600;color:#15171c;padding-bottom:10px;border-bottom:2.5px solid #d34a3e;">Edit</span>
+              <span style="font-size:13px;font-weight:600;color:#8b9099;padding-bottom:10px;">Preview</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 15px 8px;">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(160deg,#3a2b3f,#7a3a44);flex-shrink:0;"></div>
+              <div><div style="font-size:16px;font-weight:600;color:#15171c;">Maryam, 27</div><div style="font-size:10px;color:#d34a3e;font-weight:600;margin-top:2px;">✦ Verified profile</div></div>
+            </div>
+            <div style="margin:0 15px 10px;background:#faf6f2;border:1px solid #f1e4dc;border-radius:11px;padding:9px 11px;">
+              <div style="display:flex;justify-content:space-between;font-size:10.5px;font-weight:600;color:#15171c;"><span>Profile strength</span><span style="color:#d34a3e;">100%</span></div>
+              <div style="height:5px;background:#f0e0d8;border-radius:5px;margin-top:6px;overflow:hidden;"><div style="height:100%;width:100%;background:#d34a3e;border-radius:5px;"></div></div>
+            </div>
+            <div style="font-size:9px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;padding:0 15px 6px;">Photos · 6 of 6</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:0 14px;">
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(160deg,#3a2b3f,#7a3a44);"></div>
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(150deg,#2f3340,#5a3a48);"></div>
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(150deg,#403040,#7a3a44);"></div>
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(155deg,#34303f,#5a3a48);"></div>
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(160deg,#2f2535,#5a3340);"></div>
+              <div style="aspect-ratio:3/4;border-radius:8px;background:linear-gradient(150deg,#5a3340,#7a3a44);"></div>
+            </div>
+            <div style="font-size:9px;font-weight:600;color:#8b9099;letter-spacing:.04em;text-transform:uppercase;padding:11px 15px 6px;">Prompts · 3 of 3</div>
+            <div style="margin:0 14px;border:1px solid #eef0f3;border-radius:10px;padding:9px 11px;">
+              <div style="font-size:8.5px;color:#8b9099;font-weight:500;">The way to my heart is</div>
+              <div style="font-size:11px;font-weight:500;color:#15171c;line-height:1.3;margin-top:3px;">A home-cooked qabuli palaw and conversation till midnight.</div>
+            </div>
+            <div class="m-nav" style="margin-top:11px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 19V5l12 14V5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-6.8-4.2-9-8.3C1.4 9 2.8 5.6 6 5.6c2 0 3.3 1.3 4 2.6.7-1.3 2-2.6 4-2.6 3.2 0 4.6 3.4 3 6.6-2.2 4.1-9 8.3-9 8.3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v12H7l-3 3z" stroke-linejoin="round"/></svg>
+              <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <h2>Namzad launches this summer</h2>
+      <p>In select cities first — starting where our community is most concentrated. Thank you for being part of it from the start. 🍎</p>
+    </div>
+
+    <div class="legal">© 2026 Namzad<span class="dot">.</span> &nbsp;·&nbsp; Built for the Afghan diaspora</div>
+  </div>
+</body>
+</html>
